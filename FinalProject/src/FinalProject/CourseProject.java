@@ -19,7 +19,7 @@ public class CourseProject extends javax.swing.JDialog {
     /**
      * Creates new form CourseProject
      */
-    public CourseProject(java.awt.Frame parent, boolean modal, Connection con,int stdid ) {
+    public CourseProject(java.awt.Frame parent, boolean modal, Connection con,int crsid ) {
         super(parent, modal);
         initComponents();
         this.setTitle("Course");
@@ -34,7 +34,7 @@ public class CourseProject extends javax.swing.JDialog {
             Statement stmt = con.createStatement();
             ResultSet rs
                     = stmt.executeQuery("Select * "
-                            + "From tbl_courses Where crs_id =" + crsid);
+                            + "From tbl_unicourses Where crs_id =" + crsid);
             if (rs.next()) {
                 txtCode.setText(rs.getString("crs_code"));
                 txtName.setText(rs.getString("crs_name"));
@@ -44,8 +44,21 @@ public class CourseProject extends javax.swing.JDialog {
                 }else{
                     rbElective.setSelected(true);
                 }
-                cbxNumberOfCredits.setSelectedItem(rs.getString("crs_nb_of_credit"));
-                
+                cbxNumberOfCredits.setSelectedItem(rs.getInt("crs_nb_of_credit"));
+                if(rs.getString("crs_nb_of_credit").equals("1")){
+                    cbxNumberOfCredits.setSelectedItem("1");
+                }else{
+                    if(rs.getString("crs_nb_of_credit").equals("2")){
+                        cbxNumberOfCredits.setSelectedItem("2");
+                    }else
+                    cbxNumberOfCredits.setSelectedItem("3");
+                }
+                cbxLab.setSelectedItem(rs.getString("crs_lab"));
+                if(rs.getString("crs_lab").equals("Yes")){
+                    cbxLab.setSelectedItem("Yes");
+                }else{
+                    cbxLab.setSelectedItem("Not Lab");
+                }
              }
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
@@ -224,12 +237,79 @@ public class CourseProject extends javax.swing.JDialog {
                 //}else{
                   //  lebanese="No";
                 //}
-               String description = txtDescription.getText();
                int number_of_credits = Integer.parseInt(cbxNumberOfCredits.getSelectedItem().toString());
+               String description = txtDescription.getText();
+               //int number_of_credits = Integer.parseInt(cbxNumberOfCredits.getSelectedItem().toString());
                String lab =cbxLab.getSelectedItem().toString();
-                try{
-                  PreparedStatement pstmt = con.prepareStatement("Insert Into tbl_courses(crs_code,crs_name,crs_description,crs_type,crs_nbofcredits,crs_lab) Values('"+code+"','" +name +"', '" +description+"', '"+type +"','"+number_of_credits+"','"+lab+"',");
-                  
+                //try{
+                  //PreparedStatement pstmt;
+                  try {
+                PreparedStatement pstmt;
+                if(crsid==0){
+                    pstmt = con.prepareStatement("Insert Into "
+                                + "tbl_unicourses (crs_code,"
+                                + "crs_name,crs_description,"
+                                + "crs_type, crs_nb_of_credit,"
+                                + "crs_lab)"
+                                + "Values ( '" + code + "',"
+                                + "'" + name + "' ,'" + description +"','"
+                                + type+ "',"+ number_of_credits + ", '" 
+                                + lab  + "')");
+                }else{
+                    pstmt = con.prepareStatement("Update tbl_unicourses "
+                            + "Set crs_code = '" + code + "',"
+                            + "crs_name = '" + name + "',"
+                            + "crs_description = '" + description + "',"
+                            + "crs_type = '" + type + "',"
+                            + "crs_nb_of_credit = " + number_of_credits + ","
+                            + "crs_lab = '" + lab + "' "
+                            + "Where crs_id = " + crsid);
+                }
+                  //  pstmt = con.prepareStatement("Insert Into "
+                    //            + "tbl_unicourses (crs_code,"
+                   //          + "crs_name,crs_description,"
+                        //        + "crs_type, crs_nb_of_credit,"
+                          //      + "crs_lab)"
+                            //    + "Values ( '" + code + "',"
+                              //  + "'" + name + "' ,'" + description +"','"
+                                //+ type+ "',"+ number_of_credits + ", '" 
+                                //+ lab  + "')");
+                //}else{
+                  //  pstmt = con.prepareStatement("Update tbl_unicourses "
+                    //        + "Set crs_code = '" + code + "',"
+                      //      + "crs_name = '" + name + "',"
+                        //    + "crs_description = '" + description + "',"
+                          //  + "crs_type = " +type + ' '
+                            //+ "crs_nb_of_credit = '" + number_of_credits + "',"
+                         //   + "crs_lab = '" + lab + "',"
+                           // + "Where crs_id = " + crsid);
+                       //pstmt = con.prepareStatement("Insert Into "
+                         //       + "tbl_unicourses (crs_code,"
+                           //     + "crs_name, crs_description, "
+                             //   + "crs_type, crs_nb_of_credit, "
+                             //  + "crs_lab) "
+                               // + "Values ( '" + code + "', "
+                            //    + "'" + name + "', '" + description + "', "
+                              //  + type + ", '" + number_of_credits + "', "
+                                //+ lab + "')");
+               // }else{
+                 //   pstmt = con.prepareStatement("Update tbl_unicourses "
+                   //         + "Set crs_code = '" + code + "', "
+                     //       + "crs_name = '" + name + "', "
+                       //     + "crs_description = '" + description + "', "
+                         //   + "crs_type = " + type + ", "
+                           // + "crs_nb_of_credit = '" + number_of_credits + "', "
+                         //   + "crs_lab = " + lab + "," 
+                           // + "Where crs_id = " + crsid);
+                //}
+                //pstmt.execute();
+                //this.dispose();
+                     // if(crsid==0){
+                      //pstmt= con.prepareStatement("Insert Into tbl_courses(crs_code,crs_name,crs_description,crs_type,crs_nbofcredits,crs_lab) Values('"+code+"','" +name +"', '" +description+"', '"+type +"','"+number_of_credits+"','"+lab+"')");
+                      //}else{
+                   //pstmt=       
+                     //      }
+                
                   pstmt.execute();
                   this.dispose();
                 }catch(SQLException ex){

@@ -180,12 +180,12 @@ public class CoursesProject extends javax.swing.JFrame {
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblCourses.getSelectedRow();
-        if (selectedRow>-1){   //selectedRow houwe l index taba3 l row
+        if (selectedRow > -1) {
             int crsid = Integer.parseInt(tblCourses.getValueAt(selectedRow, 0).toString());
-         CourseProject newCourseProject = new CourseProject(this, true, con, 0);
-        newCourseProject.setVisible(true);
-        refreshTable();
-                   
+            CourseProject newCourseProject = new CourseProject(this, true, con, crsid);
+            newCourseProject.setVisible(true);
+            refreshTable();
+                        
         }else{
             JOptionPane.showMessageDialog(this,"Select a record to modify","warning",JOptionPane.WARNING_MESSAGE);
         }
