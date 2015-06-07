@@ -53,11 +53,11 @@ public class CourseProject extends javax.swing.JDialog {
                     }else
                     cbxNumberOfCredits.setSelectedItem("3");
                 }
-                cbxLab.setSelectedItem(rs.getString("crs_lab"));
+                //cbxLab.setSelectedItem(rs.getString("crs_lab"));
                 if(rs.getString("crs_lab").equals("Yes")){
-                    cbxLab.setSelectedItem("Yes");
+                    rbYes.setSelected(true);
                 }else{
-                    cbxLab.setSelectedItem("Not Lab");
+                    rbNotLab.setSelected(true);
                 }
              }
         } catch (SQLException ex) {
@@ -75,6 +75,7 @@ public class CourseProject extends javax.swing.JDialog {
     private void initComponents() {
 
         rbgType = new javax.swing.ButtonGroup();
+        rbgLab = new javax.swing.ButtonGroup();
         lblCode = new javax.swing.JLabel();
         txtCode = new javax.swing.JTextField();
         lblName = new javax.swing.JLabel();
@@ -85,11 +86,12 @@ public class CourseProject extends javax.swing.JDialog {
         lblNumberOfCredits = new javax.swing.JLabel();
         cbxNumberOfCredits = new javax.swing.JComboBox();
         lblLab = new javax.swing.JLabel();
-        cbxLab = new javax.swing.JComboBox();
         lblType = new javax.swing.JLabel();
         rbMajor = new javax.swing.JRadioButton();
         rbElective = new javax.swing.JRadioButton();
         btnSave = new javax.swing.JButton();
+        rbYes = new javax.swing.JRadioButton();
+        rbNotLab = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -115,8 +117,6 @@ public class CourseProject extends javax.swing.JDialog {
 
         lblLab.setText("Lab");
 
-        cbxLab.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Not Lab", "Yes" }));
-
         lblType.setText("Type");
 
         rbgType.add(rbMajor);
@@ -133,6 +133,13 @@ public class CourseProject extends javax.swing.JDialog {
             }
         });
 
+        rbgLab.add(rbYes);
+        rbYes.setText("Yes");
+
+        rbgLab.add(rbNotLab);
+        rbNotLab.setSelected(true);
+        rbNotLab.setText("Not Lab");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,7 +154,9 @@ public class CourseProject extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblLab, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(rbYes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbNotLab))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lblType, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -197,10 +206,11 @@ public class CourseProject extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLab)
-                    .addComponent(cbxLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rbYes)
+                    .addComponent(rbNotLab))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSave)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -212,10 +222,10 @@ public class CourseProject extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if(txtCode.getText().equals(null)){
+        if(txtCode.getText().equals("")){
             JOptionPane.showMessageDialog(this,"Enter a Code","Warning",JOptionPane.WARNING_MESSAGE);
          }else 
-            if(txtName.getText().equals(null)){
+            if(txtName.getText().equals("")){
                 JOptionPane.showMessageDialog(this,"Enter a Name","Warning",JOptionPane.WARNING_MESSAGE);
             }else{
                 //if(rbMajor.getSelectedIcon().equals(null)){
@@ -240,7 +250,13 @@ public class CourseProject extends javax.swing.JDialog {
                int number_of_credits = Integer.parseInt(cbxNumberOfCredits.getSelectedItem().toString());
                String description = txtDescription.getText();
                //int number_of_credits = Integer.parseInt(cbxNumberOfCredits.getSelectedItem().toString());
-               String lab =cbxLab.getSelectedItem().toString();
+               String lab;
+               if(rbYes.isSelected()){
+                    lab = "Yes";
+                }else{
+                    lab = "Not Lab";
+                }
+              // String lab =cbxLab.getSelectedItem().toString();
                 //try{
                   //PreparedStatement pstmt;
                   try {
@@ -265,50 +281,7 @@ public class CourseProject extends javax.swing.JDialog {
                             + "crs_lab = '" + lab + "' "
                             + "Where crs_id = " + crsid);
                 }
-                  //  pstmt = con.prepareStatement("Insert Into "
-                    //            + "tbl_unicourses (crs_code,"
-                   //          + "crs_name,crs_description,"
-                        //        + "crs_type, crs_nb_of_credit,"
-                          //      + "crs_lab)"
-                            //    + "Values ( '" + code + "',"
-                              //  + "'" + name + "' ,'" + description +"','"
-                                //+ type+ "',"+ number_of_credits + ", '" 
-                                //+ lab  + "')");
-                //}else{
-                  //  pstmt = con.prepareStatement("Update tbl_unicourses "
-                    //        + "Set crs_code = '" + code + "',"
-                      //      + "crs_name = '" + name + "',"
-                        //    + "crs_description = '" + description + "',"
-                          //  + "crs_type = " +type + ' '
-                            //+ "crs_nb_of_credit = '" + number_of_credits + "',"
-                         //   + "crs_lab = '" + lab + "',"
-                           // + "Where crs_id = " + crsid);
-                       //pstmt = con.prepareStatement("Insert Into "
-                         //       + "tbl_unicourses (crs_code,"
-                           //     + "crs_name, crs_description, "
-                             //   + "crs_type, crs_nb_of_credit, "
-                             //  + "crs_lab) "
-                               // + "Values ( '" + code + "', "
-                            //    + "'" + name + "', '" + description + "', "
-                              //  + type + ", '" + number_of_credits + "', "
-                                //+ lab + "')");
-               // }else{
-                 //   pstmt = con.prepareStatement("Update tbl_unicourses "
-                   //         + "Set crs_code = '" + code + "', "
-                     //       + "crs_name = '" + name + "', "
-                       //     + "crs_description = '" + description + "', "
-                         //   + "crs_type = " + type + ", "
-                           // + "crs_nb_of_credit = '" + number_of_credits + "', "
-                         //   + "crs_lab = " + lab + "," 
-                           // + "Where crs_id = " + crsid);
-                //}
-                //pstmt.execute();
-                //this.dispose();
-                     // if(crsid==0){
-                      //pstmt= con.prepareStatement("Insert Into tbl_courses(crs_code,crs_name,crs_description,crs_type,crs_nbofcredits,crs_lab) Values('"+code+"','" +name +"', '" +description+"', '"+type +"','"+number_of_credits+"','"+lab+"')");
-                      //}else{
-                   //pstmt=       
-                     //      }
+                 
                 
                   pstmt.execute();
                   this.dispose();
@@ -362,7 +335,6 @@ public class CourseProject extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox cbxLab;
     private javax.swing.JComboBox cbxNumberOfCredits;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -373,6 +345,9 @@ public class CourseProject extends javax.swing.JDialog {
     private javax.swing.JLabel lblType;
     private javax.swing.JRadioButton rbElective;
     private javax.swing.JRadioButton rbMajor;
+    private javax.swing.JRadioButton rbNotLab;
+    private javax.swing.JRadioButton rbYes;
+    private javax.swing.ButtonGroup rbgLab;
     private javax.swing.ButtonGroup rbgType;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextArea txtDescription;

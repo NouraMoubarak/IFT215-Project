@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="rbgType">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="rbgLab">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -38,7 +40,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblLab" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cbxLab" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbYes" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="rbNotLab" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -103,11 +107,12 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblLab" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cbxLab" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rbYes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rbNotLab" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnSave" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -171,16 +176,6 @@
         <Property name="text" type="java.lang.String" value="Lab"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cbxLab">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
-            <StringItem index="0" value="Not Lab"/>
-            <StringItem index="1" value="Yes"/>
-          </StringArray>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblType">
       <Properties>
         <Property name="text" type="java.lang.String" value="Type"/>
@@ -210,6 +205,23 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbYes">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="rbgLab"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Yes"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbNotLab">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="rbgLab"/>
+        </Property>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Not Lab"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
